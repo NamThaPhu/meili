@@ -1,0 +1,105 @@
+@import url("root.css");
+
+@media screen and (min-width: 992px) {
+    .wrapper {
+        grid-template-columns: 1fr 5fr;
+        grid-template-areas:
+            "main-head main-nav"
+            "side slider"
+            "side content"
+            "side content"
+            "side main-footer"
+        ;
+    }
+
+    .main-head {
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .main-nav {
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+    }
+
+    .nav__item {
+        display: flex;
+        text-decoration: none;
+        color: black;
+        padding: 16px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav__item-icon + .nav__item-name {
+        margin-left: 16px;
+    }
+
+    .side {
+        height: calc(100vh - 16px * 3 - 60px);
+        top: calc(16px * 2 + 60px);
+        position: sticky;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        border: none;
+    }
+
+    .side__title {
+        background-color: gainsboro;
+        position: sticky;
+        border: 1px solid gainsboro;
+        border-radius: 16px 16px 0 0;
+        width: 100%;
+    }
+
+    .side__title-name {
+        display: block;
+    }
+
+    .side__title-icon + .side__title-name {
+        margin-left: 16px;
+    }
+
+    .side__container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: calc(100% - 16px * 2);
+    }
+
+    .side__container__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: black;
+    }
+    
+    .side__container__item-image img {
+        border-radius: 999em;
+        background-color: red;
+        height: 48px;
+    }
+
+    .side__container__item-image + .side__container__item-name {
+        margin-left: 16px;
+    }
+
+    
+}

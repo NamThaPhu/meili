@@ -1,0 +1,23 @@
+@import url("root.css");
+
+@media screen and (min-width: 576px) {
+    .wrapper {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "main-nav main-head main-head main-head main-head side"
+            "slider slider slider slider slider slider"
+            "content content content content content content"
+            "main-footer main-footer main-footer main-footer main-footer main-footer"
+        ;
+    }
+
+    .side {
+        position: sticky;
+        top: var(--main-top);
+        justify-content: center;
+    }
+
+    .side__title-name {
+        display: none;
+    }
+}
