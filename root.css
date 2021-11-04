@@ -6,7 +6,7 @@
 }
 
 :root {
-    --main-border: 1px solid black;
+    --main-border: 1px solid gainsboro;
     --main-margin: 16px;
     --main-border-radius: 16px;
     --main-padding: 16px;

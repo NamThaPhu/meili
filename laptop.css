@@ -2,7 +2,7 @@
 
 @media screen and (min-width: 992px) {
     .wrapper {
-        grid-template-columns: 1fr 5fr;
+        grid-template-columns: 1.2fr 4fr;
         grid-template-areas:
             "main-head main-nav"
             "side slider"
@@ -14,9 +14,9 @@
 
     .main-head {
         height: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        font-size: 1.5em;
+        background-color: white;
+        border-radius: var(--main-border-radius) 0 0 var(--main-border-radius);
     }
 
     .main-nav {
@@ -24,6 +24,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        border-radius: 0 16px 16px 0;
+        background-color: gainsboro;
+        border: var(--main-border);
     }
 
     .menu {
@@ -44,6 +47,8 @@
         padding: 16px;
         justify-content: center;
         align-items: center;
+        text-transform: uppercase;
+        font-size: 1.2em;
     }
 
     .nav__item-icon + .nav__item-name {
@@ -57,7 +62,11 @@
         display: flex;
         flex-direction: column;
         justify-content: start;
-        border: none;
+        border-radius: var(--main-border-radius);
+    }
+
+    .side__arrow-icon {
+        display: none;
     }
 
     .side__title {
@@ -66,10 +75,19 @@
         border: 1px solid gainsboro;
         border-radius: 16px 16px 0 0;
         width: 100%;
+        display: flex;
+    }
+
+    .side__title-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .side__title-name {
         display: block;
+        text-transform: uppercase;
+        font-size: 1.2em;
     }
 
     .side__title-icon + .side__title-name {
@@ -81,6 +99,8 @@
         flex-direction: column;
         width: 100%;
         height: calc(100% - 16px * 2);
+        align-items: start;
+        background-color: white;
     }
 
     .side__container__item {
@@ -89,6 +109,10 @@
         align-items: center;
         text-decoration: none;
         color: black;
+    }
+
+    .side__container__item + .side__container__item {
+        margin-top: 16px;
     }
     
     .side__container__item-image img {
@@ -101,5 +125,20 @@
         margin-left: 16px;
     }
 
-    
+    .slider {
+        
+    }
+
+    .slider__carousel {
+        /* width: 100%; */
+    }
+
+    .slider__carousel-image {
+        /* width: 100%; */
+    }
+
+    .slider__carousel-image img {
+        width: 100%;
+        border-radius: var(--main-border-radius);
+    }
 }
