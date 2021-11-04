@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+:root {
+    --main-border: 1px solid black;
+    --main-margin: 16px;
+    --main-border-radius: 16px;
+    --main-padding: 16px;
+    --main-top: 16px;
+    --main-background-color: gainsboro;
+}
