@@ -4,6 +4,7 @@
         grid-template-columns: 1.2fr 4fr;
         grid-template-areas: "main-head main-nav" "side slider" "side content" "side content" "side main-footer";
         gap: 16px;
+        grid-gap: 16px;
         padding: 16px;
     }
     .main-head {
@@ -184,16 +185,19 @@
         flex-direction: column;
         border: 1px solid gainsboro;
         border-radius: 16px;
+        justify-content: space-between;
     }
     .product__name {
-        order: 3;
-        padding: 0 16px;
-        margin-bottom: 16px;
-    }
-    .product__summary {
         order: 2;
         padding: 0 16px;
+        margin-bottom: 16px;
+        text-overflow: ellipsis;
+    }
+    .product__summary {
+        order: 3;
+        padding: 0 16px;
         margin-bottom: 8px;
+
     }
     .product__image {
         order: 1;
