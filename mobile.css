@@ -1,173 +1,162 @@
-@import url("root.css");
-.wrapper {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    grid-template-areas: "main-nav main-head" "slider slider" "side side" "content content" "main-footer main-footer";
-    grid-gap: 16px;
-    gap: 16px;
-    margin: var(--main-margin);
-}
-
-.main-head {
-    grid-area: main-head;
-    border: var(--main-border);
-    border-radius: 0 var(--main-border-radius) 0 0;
-    padding: var(--main-padding);
-    position: sticky;
-    top: var(--main-top);
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    background-color: var(--main-background-color);
-    height: 60px;
-}
-
-.slider {
-    grid-area: slider;
-    border: var(--main-border);
-}
-
-.slider__carousel {
-    /* width: 100%; */
-}
-
-.slider__carousel-image {
-    /* width: 100%; */
-}
-
-.slider__carousel-image img {
-    width: 100%;
-}
-
-.main-nav {
-    grid-area: main-nav;
-    border: var(--main-border);
-    border-radius: var(--main-border-radius) 0 0 0;
-    padding: var(--main-padding);
-    position: sticky;
-    top: var(--main-top);
-    background-color: var(--main-background-color);
-    height: 60px;
-}
-
-.menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.nav {
-    display: none;
-}
-
-.content {
-    grid-area: content;
-    border: var(--main-border);
-    border-radius: var(--main-border-radius);
-    padding: var(--main-padding);
-}
-
-.side {
-    grid-area: side;
-    border-radius: 0 0 var(--main-border-radius) var(--main-border-radius);
-    top: calc(16px * 2 + 60px);
-    position: sticky;
-    border: var(--main-border);
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    background-color: var(--main-background-color);
-    height: 60px;
-}
-
-.side__title {
-    display: flex;
-    padding: 16px;
-}
-
-.side__title-name {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-}
-
-.side__title-icon+.side__title-name {
-    margin-left: 16px;
-}
-
-.side__arrow-icon {
-    position: absolute;
-    right: 16px;
-}
-
-.side__container {
-    display: none;
-    overflow-y: auto;
-    padding: 16px;
-    border: 1px solid gainsboro;
-    border-radius: 0 0 var(--main-border-radius) var(--main-border-radius);
-}
-
-.side__container::-webkit-scrollbar {
-    background-color: #F5F5F5;
-    border-radius: 0 0 16px 0;
-}
-
-.side__container::-webkit-scrollbar-thumb {
-    background-color: gainsboro;
-    border-radius: 0 0 16px 0;
-}
-
-/* content */
-
-.content {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    gap: 16px;
-    grid-gap: 16px;
-}
-
-.product {
-    height: auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--main-background-color);
-    border-radius: 16px;
-}
-
-.product__name {
-    order: 3;
-    padding: 0 16px;
-    margin-bottom: 16px;
-}
-
-.product__summary {
-    order: 2;
-    padding: 0 16px;
-    margin-bottom: 8px;
-}
-
-.product__image {
-    order: 1;
-    border-radius: 16px 16px 0 0;
-    margin-bottom: 16px;
-}
-
-.product__image img {
-    width: 100%;
-    border-radius: 16px 16px 0 0;
-}
-
-.main-footer {
-    grid-area: main-footer;
-    border: var(--main-border);
-    border-radius: var(--main-border-radius);
-    padding: var(--main-padding);
-}
-
-i {
-    font-size: 1.5em;
+@media screen and (max-width: 576px) {
+    .wrapper {
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        grid-template-areas: "main-nav main-head" "slider slider" "side side" "content content" "main-footer main-footer";
+        gap: 8px;
+        padding: 8px;
+    }
+    
+    .main-head {
+        grid-area: main-head;
+        border: 1px solid gainsboro;
+        border-radius: 0 8px 0 0;
+        padding: 8px;
+        position: sticky;
+        top: 8px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        background-color: gainsboro;
+        height: 60px;
+    }
+    
+    .slider {
+        grid-area: slider;
+        border: 1px solid gainsboro;
+    }
+    
+    .slider__carousel-image img {
+        width: 100%;
+    }
+    
+    .main-nav {
+        grid-area: main-nav;
+        border: 1px solid gainsboro;
+        border-radius: 8px 0 0 0;
+        padding: 8px;
+        position: sticky;
+        top: 8px;
+        background-color: gainsboro;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .nav {
+        display: none;
+    }
+    
+    .content {
+        grid-area: content;
+        border: 1px solid gainsboro;
+        border-radius: 8px;
+        padding: 16px;
+    }
+    
+    .side {
+        grid-area: side;
+        border-radius: 0 0 8px 8px;
+        top: calc(8px * 2 + 60px);
+        position: sticky;
+        border: 1px solid gainsboro;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        background-color: gainsboro;
+        height: 60px;
+    }
+    
+    .side__title {
+        display: flex;
+        padding: 16px;
+    }
+    
+    .side__title-name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+    }
+    
+    .side__title-icon+.side__title-name {
+        margin-left: 16px;
+    }
+    
+    .side__arrow-icon {
+        position: absolute;
+        right: 16px;
+    }
+    
+    .side__container {
+        display: none;
+        overflow-y: auto;
+        padding: 16px;
+        border: 1px solid gainsboro;
+        border-radius: 0 0 8px 8px;
+    }
+    
+    .side__container::-webkit-scrollbar {
+        background-color: #F5F5F5;
+        border-radius: 0 0 16px 0;
+    }
+    
+    .side__container::-webkit-scrollbar-thumb {
+        background-color: gainsboro;
+        border-radius: 0 0 16px 0;
+    }
+    
+    .content {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 16px;
+        grid-gap: 16px;
+    }
+    
+    .product {
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid gainsboro;
+        border-radius: 16px;
+    }
+    
+    .product__name {
+        order: 3;
+        padding: 0 16px;
+        margin-bottom: 16px;
+    }
+    
+    .product__summary {
+        order: 2;
+        padding: 0 16px;
+        margin-bottom: 8px;
+    }
+    
+    .product__image {
+        order: 1;
+        border-radius: 16px 16px 0 0;
+        margin-bottom: 16px;
+    }
+    
+    .product__image img {
+        width: 100%;
+        border-radius: 16px 16px 0 0;
+    }
+    
+    .main-footer {
+        grid-area: main-footer;
+        border: 1px solid gainsboro;
+        border-radius: 8px;
+        padding: 8px;
+    }
 }
