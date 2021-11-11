@@ -1,0 +1,6 @@
+.footer {
+    grid-area: footer;
+    border: 1px solid gainsboro;
+    border-radius: 1em;
+    padding: 1em;
+}

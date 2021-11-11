@@ -1,4 +1,4 @@
-b// Lấy nhiều danh mục
+// Lấy nhiều danh mục
 const getApiCategories = (callback) => {
     fetch("API/shopee/get_categories.php")
         .then((res) => res.json())
@@ -7,17 +7,25 @@ const getApiCategories = (callback) => {
 function renderCategories(data) {
     var html = data.data.shop_categories.map((item) => {
         return `
-        <input style="display: none;" id="checkedCategory${item.shop_category_id}" name="checkCategory" type="radio" class="side__checked">
-        <label for="checkedCategory${item.shop_category_id}" class="side__container__item" id="${item.shop_category_id}" onclick="getCategoryId(${item.shop_category_id})">
-            <div class="side__container__item-image">
-                <img src="https://cf.shopee.vn/file/${item.image}" alt="">
-            </div>
-            <div class="side__container__item-name">${item.display_name}</div>
+        <input
+            style="display: none;"
+            id="checkedCategory${item.shop_category_id}"
+            name="checkCategory"
+            type="radio"
+            class="sidebar__content--input"
+        >
+        <label
+            for="checkedCategory${item.shop_category_id}"
+            class="sidebar__content--item" id="${item.shop_category_id}"
+            onclick="handleGetCategoryProducts(${item.shop_category_id})"
+        >
+            <img class="sidebar__content--item--image" src="https://cf.shopee.vn/file/${item.image}" alt="">
+            <div class="sidebar__content--item--name">${item.display_name}</div>
         </label>
         `
     });
 
-    document.querySelector('.side__container').innerHTML = html.join('')
+    document.querySelector('.sidebar__content').innerHTML = html.join('')
 }
 getApiCategories(renderCategories)
 
@@ -34,29 +42,28 @@ function renderProducts(data) {
         var currency = item.item_basic.currency
         var price = price_min == price_max ? `${price_min}` : `${price_min} - ${price_max}`
         return `
-        <div class="product">
-            <div class="product__image">
-                <img src="https://cf.shopee.vn/file/${item.item_basic.image}" alt="">
+        <div class="main__product">
+            <img class="main__product--image" src="https://cf.shopee.vn/file/${item.item_basic.image}" alt="">
+            <div class="main__product--name">
+                ${item.item_basic.name}
             </div>
-            <div class="group-1">
-            <div class="product__name"><p>${item.item_basic.name}</p></div>
-            <div class="group-2">
-                <div class="product__price">${price} <sup style="font-size: 0.5em;">${currency}</sup></div>
-                <button class="product__view" type="button">Visit to Shopee</button>
+            <div class="main__product--price">
+                ${price}
+                <sup style="font-size: 0.5em;">${currency}</sup>
             </div>
+            <div class="main__product--controller">
+                <button class="main__product--controller--view" type="button">View</button>
             </div>
         </div>
         `
     })
 
-    document.querySelector('.content').innerHTML = html.join('')
+    document.querySelector('.main').innerHTML = html.join('')
 }
 getApiCategoriesProducts(renderProducts)
 
 // Lấy nhiều sản phẩm từ một danh mục
-const getApiCategoryProducts = (callback, id) => {
-    var formData = new FormData()
-    formData.append('id', id)
+const getApiCategoryProducts = (callback, formData) => {
     const options = {
         method: 'POST',
         // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
@@ -66,14 +73,19 @@ const getApiCategoryProducts = (callback, id) => {
         .then(response => response.json())
         .then(callback)
 }
-
-////////////////////////////////
-function getCategoryId(id) {
-    getApiCategoryProducts(renderProducts, id)
+function handleGetCategoryProducts(id) {
+    var formData = new FormData()
+    formData.append('id', id)
+    getApiCategoryProducts(renderProducts, formData)
+}
+function handleSortCategoryProducts(nameForm) {
+    const formElement = document.querySelector('form[name="'+nameForm+'"]')
+    var formData = new FormData(formElement)
+    getApiCategoryProducts(renderProducts, formData)
 }
 
 // Lấy thông tin shop
-const getShop = (callback) => {
+const getApiShop = (callback) => {
     fetch('API/shopee/get_shop.php')
         .then((res) => res.json())
         .then(callback)
@@ -81,33 +93,45 @@ const getShop = (callback) => {
 function renderShop(data) {
     var footer = data.data.description
     document.querySelector('.footer__item').innerText = footer
-    var header = `
-        <sup class="shopee-icon"><a href="https://shopee.vn/${data.data.account.username}">Shopee</a></sup>
-        <a class="nameshop" href="https://shopee.vn/${data.data.account.username}" title="Ghé thăm cửa hàng shopee">${data.data.name}</a>
-        <div class="account">
-            <div class="account__image">
-                <img src="https://cf.shopee.vn/file/${data.data.account.portrait}">
+    var header__shop = `
+        <div class="header__shop--icon-shopee">
+            <a href="https://shopee.vn/${data.data.account.username}">
+                Shopee
+            </a>
+        </div>
+        <a class="header__shop--name" href="https://shopee.vn/${data.data.account.username}" title="Ghé thăm cửa hàng shopee">
+            ${data.data.name}
+        </a>
+        <div class="header__shop--account">
+            <img class="header__shop--account--image" src="https://cf.shopee.vn/file/${data.data.account.portrait}">
+            <div class="header__shop--account--name">
+                ${data.data.account.username}
             </div>
-            <div class="account__username">${data.data.account.username}</div>
         </div>
     `
-    document.querySelector('.main-head').innerHTML = header
+    document.querySelector('.header__shop').innerHTML = header__shop
 
 }
-getShop(renderShop)
+getApiShop(renderShop)
 
 // Lấy ảnh slider
-const getSlider = (callback) => {
+const getApiSlider = (callback) => {
     fetch('API/shopee/get_slider.php')
         .then((res) => res.json())
         .then(callback)
 }
 function renderSlider(data) {
+    var index = 0
+    for (var i = 0; i < data.data.template.decoration.length; i++) {
+        if (data.data.template.decoration[i].type == 1) {
+            index = i
+        }
+    }
     var html1 = `
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-indicators">
     `
-    var html2 = data.data.template.decoration[1].data.banners.map((item, index) => {
+    var html2 = data.data.template.decoration[index].data.banners.map((item, index) => {
         return `
             <button
                 type="button"
@@ -124,7 +148,7 @@ function renderSlider(data) {
         </div>
         <div class="carousel-inner">
     `
-    var html4 = data.data.template.decoration[1].data.banners.map((item, index) => {
+    var html4 = data.data.template.decoration[index].data.banners.map((item, index) => {
         return `
             <div class="carousel-item ${index == 0 ? 'active' : ''}" data-bs-interval="3000">
               <img src="https://cf.shopee.vn/file/${item.banner_image}" class="d-block w-100" alt="...">
@@ -145,4 +169,4 @@ function renderSlider(data) {
     `
     document.querySelector('.slider').innerHTML = html1 + html2.join('') + html3 + html4.join('') + html5
 }
-getSlider(renderSlider)
+getApiSlider(renderSlider)

@@ -1,0 +1,13 @@
+.slider {
+    grid-area: slider;
+    border-radius: 1em;
+    border: 1px solid gainsboro;
+}
+.carousel-inner {
+    height: 420px;
+    width: 100%;
+    border-radius: 1em;
+}
+.carousel-item img {
+    border-radius: 1em;
+}

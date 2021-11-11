@@ -1,0 +1,82 @@
+.sort {
+    grid-area: sort;
+    border: 1px solid gainsboro;
+    height: 60px;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sort__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    border-left: 1px solid gainsboro;
+    border-radius: 0 1em 1em 0;
+}
+
+.sort__content--controller {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+}
+
+.sort__content--controller--button {
+    background-color: white;
+    color: orangered;
+    border: 1px solid orangered;
+    border-radius: 1em;
+    padding: 0.5em;
+    transition: all 0.4s linear;
+}
+
+.sort__content--controller--button:hover {
+    background-color: orangered;
+    color: white;
+    transition: all 0.4s linear;
+}
+
+.sort__content--controller--button:active {
+    background-color: white;
+    color: orangered;
+    transition: all 1s linear;
+}
+
+.sort__content {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 75%;
+    margin-left: 1em;
+}
+
+.sort__content--item {
+    border: 1px solid gainsboro;
+    background-color: white;
+    color: orangered;
+    border-radius: 1em;
+    width: 120px;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.25em;
+    transition: all 0.4s linear;
+}
+
+.sort__content--item:hover {
+    border: 1px solid orangered;
+}
+
+.sort__content--item > option {
+    text-align: center;
+}
+
+.sort__content--input:checked + .sort__content--item-active {
+    transition: all 0.4s linear;
+    background-color: orangered;
+    color: white;
+}

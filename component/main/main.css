@@ -1,0 +1,86 @@
+.main {
+    grid-area: main;
+    border: 1px solid gainsboro;
+    padding: 1em;
+    z-index: 1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1em;
+    border-radius: 1em;
+}
+
+.main__product {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gainsboro;
+    border-radius: 1em;
+    transition: all 0.5s linear;
+}
+
+.main__product--name {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 3em;
+    margin: 0.5em;
+    padding: 0 0.5em;
+}
+
+.main__product--name:hover {
+    color: blueviolet;
+}
+
+.main__product--price {
+    color: red;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5em;
+    margin: 0.5em;
+    transition: all 0.5s linear;
+    justify-content: center;
+}
+
+.main__product--price:hover {
+    color: blueviolet;
+}
+
+.main__product--controller {
+    padding: 0 0.5em;
+    margin: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    transition: all 0.5s linear;
+}
+
+.main__product--controller--view {
+    background-color: white;
+    color: orangered;
+    border: 1px solid gainsboro;
+    border-radius: 1em;
+    padding: 0.5em;
+    width: 100%;
+    transition: all 0.5s linear;
+}
+
+.main__product--controller--view:hover {
+    background-color: orangered;
+    color: white;
+    transition: all 0.5s linear;
+}
+
+.main__product--controller:active {
+    background-color: gainsboro;
+    color: black;
+}
+
+.main__product--image {
+    width: 100%;
+    height: auto;
+    border-radius: 1em 1em 0 0;
+}

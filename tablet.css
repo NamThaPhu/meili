@@ -1,12 +1,13 @@
-@media screen and (min-width: 576px) and (max-width: 992px) {
+/* @media screen and (min-width: 576px) {
     .wrapper {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-areas: "main-nav main-head main-head main-head main-head side" "slider slider slider slider slider slider" "content content content content content content" "main-footer main-footer main-footer main-footer main-footer main-footer";
+        grid-template-areas: "main-nav main-nav main-nav main-nav main-nav side" "slider slider slider slider slider slider" "content content content content content content" "main-footer main-footer main-footer main-footer main-footer main-footer";
         gap: 16px;
         padding: 16px;
     }
     .main-head {
+        display: none;
         grid-area: main-head;
         border: 1px solid gainsboro;
         border-radius: 0px;
@@ -151,4 +152,4 @@
         border-radius: 16px;
         padding: 16px;
     }
-}
+} */
