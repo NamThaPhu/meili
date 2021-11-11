@@ -6,16 +6,21 @@
         <label for="newest" class="sort__content--item sort__content--item-active">Newest</label>
         <input class="sort__content--input" style="display: none;" type="radio" id="sales" name="sortby" value="sales">
         <label for="sales" class="sort__content--item sort__content--item-active">Sales</label>
-        <select onclick="() => { alert('Tính năng đang thử nghiệm. Và có lỗi!!!') }" class="sort__content--item" name="order" disabled>
+        <select onclick="alertShop('Tính năng đang thử nghiệm!!!')" class="sort__content--item" name="order">
             <option value="null">Price</option>
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
         </select>
         <div class="sort__content--controller">
-            <button type="button" class="sort__content--controller--button" onclick="handleSortCategoryProducts('sortby')" >Filter</button>
+            <button type="button" class="sort__content--controller--button" onclick="handleGetCategoryProducts()">Filter</button>
         </div>
     </form>
     <div class="sort__title">
         Sorted by
     </div>
 </div>
+<script>
+    function alertShop(message) {
+        alert(message)
+    }
+</script>

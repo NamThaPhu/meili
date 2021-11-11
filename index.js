@@ -1,6 +1,12 @@
 // Lấy nhiều danh mục
-const getApiCategories = (callback) => {
-    fetch("API/shopee/get_categories.php")
+const getApiCategories = (callback, formData) => {
+    console.log(formData.get('shopId'))
+    const options = {
+        method: 'POST',
+        // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
+        body: formData
+    }
+    fetch("API/shopee/get_categories.php", options)
         .then((res) => res.json())
         .then(callback)
 }
@@ -10,13 +16,14 @@ function renderCategories(data) {
         <input
             style="display: none;"
             id="checkedCategory${item.shop_category_id}"
-            name="checkCategory"
+            name="categoryId"
             type="radio"
             class="sidebar__content--input"
+            value=${item.shop_category_id}
         >
         <label
             for="checkedCategory${item.shop_category_id}"
-            class="sidebar__content--item" id="${item.shop_category_id}"
+            class="sidebar__content--item"
             onclick="handleGetCategoryProducts(${item.shop_category_id})"
         >
             <img class="sidebar__content--item--image" src="https://cf.shopee.vn/file/${item.image}" alt="">
@@ -27,14 +34,21 @@ function renderCategories(data) {
 
     document.querySelector('.sidebar__content').innerHTML = html.join('')
 }
-getApiCategories(renderCategories)
 
-// Lấy nhiều sản phẩm từ nhiều danh mục
-const getApiCategoriesProducts = (callback) => {
-    fetch('API/shopee/get_categories_products.php')
-        .then((res) => res.json())
+getApiCategories(renderCategories, new FormData())
+
+// Lấy nhiều sản phẩm từ một danh mục
+const getApiCategoryProducts = (callback, formData) => {
+    const options = {
+        method: 'POST',
+        // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
+        body: formData
+    }
+    fetch('API/shopee/get_category_products.php', options)
+        .then(response => response.json())
         .then(callback)
 }
+
 function renderProducts(data) {
     var html = data.items.map((item) => {
         var price_min = Number(item.item_basic.price_min) / 100000
@@ -60,33 +74,38 @@ function renderProducts(data) {
 
     document.querySelector('.main').innerHTML = html.join('')
 }
-getApiCategoriesProducts(renderProducts)
 
-// Lấy nhiều sản phẩm từ một danh mục
-const getApiCategoryProducts = (callback, formData) => {
-    const options = {
-        method: 'POST',
-        // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
-        body: formData
+getApiCategoryProducts(renderProducts, new FormData())
+
+function handleGetCategoryProducts(categoryId) {
+    const formElement1 = document.querySelector('form[name="categoryselected"]')
+    var formData1 = new FormData(formElement1)
+    if (formData1.get('categoryId') == null) {
+        formData1.set('categoryId', categoryId)
     }
-    fetch('API/shopee/get_category_products.php', options)
-        .then(response => response.json())
-        .then(callback)
-}
-function handleGetCategoryProducts(id) {
+    const formElement2 = document.querySelector('form[name="sortby"]')
+    var formData2 = new FormData(formElement2)
     var formData = new FormData()
-    formData.append('id', id)
-    getApiCategoryProducts(renderProducts, formData)
-}
-function handleSortCategoryProducts(nameForm) {
-    const formElement = document.querySelector('form[name="'+nameForm+'"]')
-    var formData = new FormData(formElement)
+    for (var pair of formData1.entries()) {
+        formData.append(pair[0], pair[1])
+    }
+    for (var pair of formData2.entries()) {
+        formData.append(pair[0], pair[1])
+    }
+    // for (var value of formData.values()) {
+    //     console.log(value);
+    // }
     getApiCategoryProducts(renderProducts, formData)
 }
 
 // Lấy thông tin shop
-const getApiShop = (callback) => {
-    fetch('API/shopee/get_shop.php')
+const getApiShop = (callback, formData) => {
+    var options = {
+        method: 'POST',
+        // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
+        body: formData
+    }
+    fetch('API/shopee/get_shop.php', options)
         .then((res) => res.json())
         .then(callback)
 }
@@ -112,16 +131,21 @@ function renderShop(data) {
     document.querySelector('.header__shop').innerHTML = header__shop
 
 }
-getApiShop(renderShop)
+getApiShop(renderShop, new FormData())
 
 // Lấy ảnh slider
-const getApiSlider = (callback) => {
-    fetch('API/shopee/get_slider.php')
+const getApiSlider = (callback, formData) => {
+    var options = {
+        method: 'POST',
+        // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
+        body: formData
+    }
+    fetch('API/shopee/get_slider.php', options)
         .then((res) => res.json())
         .then(callback)
 }
 function renderSlider(data) {
-    var index = 0
+    var index = 10
     for (var i = 0; i < data.data.template.decoration.length; i++) {
         if (data.data.template.decoration[i].type == 1) {
             index = i
@@ -169,4 +193,15 @@ function renderSlider(data) {
     `
     document.querySelector('.slider').innerHTML = html1 + html2.join('') + html3 + html4.join('') + html5
 }
-getApiSlider(renderSlider)
+getApiSlider(renderSlider, new FormData())
+
+// Hiển thị một shopee store từ shopid
+
+function getShopId() {
+    var formElement = document.querySelector('form[name="shopidget"]')
+    var formData = new FormData(formElement)
+    getApiSlider(renderSlider, formData)
+    getApiCategories(renderCategories, formData)
+    getApiShop(renderShop, formData)
+    getApiCategoryProducts(renderProducts, formData)
+}
