@@ -1,12 +1,16 @@
+
+var formData = new FormData()
+const id = '406356404'
+var shopId = localStorage.getItem('shopId') || id
+formData.append('shopId', shopId)
 // Lấy nhiều danh mục
 const getApiCategories = (callback, formData) => {
-    console.log(formData.get('shopId'))
     const options = {
         method: 'POST',
         // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
         body: formData
     }
-    fetch("API/shopee/get_categories.php", options)
+    fetch("../API/shopee/get_categories.php", options)
         .then((res) => res.json())
         .then(callback)
 }
@@ -19,12 +23,12 @@ function renderCategories(data) {
             name="categoryId"
             type="radio"
             class="sidebar__content--input"
-            value=${item.shop_category_id}
+            value="${item.shop_category_id}"
         >
         <label
             for="checkedCategory${item.shop_category_id}"
             class="sidebar__content--item"
-            onclick="handleGetCategoryProducts(${item.shop_category_id})"
+            onclick="handleGetCategoryId(${item.shop_category_id})"
         >
             <img class="sidebar__content--item--image" src="https://cf.shopee.vn/file/${item.image}" alt="">
             <div class="sidebar__content--item--name">${item.display_name}</div>
@@ -35,7 +39,7 @@ function renderCategories(data) {
     document.querySelector('.sidebar__content').innerHTML = html.join('')
 }
 
-getApiCategories(renderCategories, new FormData())
+getApiCategories(renderCategories, formData)
 
 // Lấy nhiều sản phẩm từ một danh mục
 const getApiCategoryProducts = (callback, formData) => {
@@ -44,7 +48,7 @@ const getApiCategoryProducts = (callback, formData) => {
         // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
         body: formData
     }
-    fetch('API/shopee/get_category_products.php', options)
+    fetch('../API/shopee/get_category_products.php', options)
         .then(response => response.json())
         .then(callback)
 }
@@ -53,20 +57,42 @@ function renderProducts(data) {
     var html = data.items.map((item) => {
         var price_min = Number(item.item_basic.price_min) / 100000
         var price_max = Number(item.item_basic.price_max) / 100000
+        var price_min_before_discount = Number(item.item_basic.price_min_before_discount) / 100000
+        var price_max_before_discount = Number(item.item_basic.price_max_before_discount) / 100000
         var currency = item.item_basic.currency
+        var price_before =
+            price_min_before_discount == price_max_before_discount
+            ? `${price_min_before_discount}`
+            : `${price_max_before_discount} - ${price_max_before_discount}`
         var price = price_min == price_max ? `${price_min}` : `${price_min} - ${price_max}`
+        console.log(price_before)
         return `
         <div class="main__product">
-            <img class="main__product--image" src="https://cf.shopee.vn/file/${item.item_basic.image}" alt="">
+            <div
+                class="main__product--tag-sale"
+                style="display: ${item.item_basic.discount == null ? 'none' : 'block'}"
+            >   
+                <sup style="font-size: 0.75em; color: red;">SALE OFF</sup>
+                ${item.item_basic.discount}
+            </div>
+            <div class="main__product--cover-image">
+                <img class="main__product--image" src="https://cf.shopee.vn/file/${item.item_basic.image}" alt="">
+            </div>
             <div class="main__product--name">
                 ${item.item_basic.name}
+            </div>
+            <div class="main__product--price main__product--price-before" style="display: ${item.item_basic.discount == null ? 'none' : 'flex'}">
+                <del>${price_before}</del>
+                <sup style="font-size: 0.5em;">${currency}</sup>
             </div>
             <div class="main__product--price">
                 ${price}
                 <sup style="font-size: 0.5em;">${currency}</sup>
             </div>
             <div class="main__product--controller">
-                <button class="main__product--controller--view" type="button">View</button>
+                <a class="main__product--controller--view" onclick="handleRedirectToShopee('${item.item_basic.name}', '${item.item_basic.shopid}', '${item.item_basic.itemid}')">
+                    View
+                </a>
             </div>
         </div>
         `
@@ -75,26 +101,32 @@ function renderProducts(data) {
     document.querySelector('.main').innerHTML = html.join('')
 }
 
-getApiCategoryProducts(renderProducts, new FormData())
+getApiCategoryProducts(renderProducts, formData)
 
-function handleGetCategoryProducts(categoryId) {
-    const formElement1 = document.querySelector('form[name="categoryselected"]')
-    var formData1 = new FormData(formElement1)
-    if (formData1.get('categoryId') == null) {
-        formData1.set('categoryId', categoryId)
-    }
-    const formElement2 = document.querySelector('form[name="sortby"]')
-    var formData2 = new FormData(formElement2)
+function handleGetSortby(sortby) {
+    localStorage.setItem('sortby', sortby)
+    const sortbyLS = localStorage.getItem('sortby') || 'pop'
+    const categoryIdLS = localStorage.getItem('categoryId') || ''
+    const shopIdLS = localStorage.getItem('shopId') || id
+    handleGetCategoryProducts(shopIdLS, categoryIdLS, sortbyLS)
+}
+
+function handleGetCategoryId(categoryId) {
+    localStorage.setItem('categoryId', categoryId)
+    const sortbyLS = localStorage.getItem('sortby') || 'pop'
+    const categoryIdLS = localStorage.getItem('categoryId') || ''
+    const shopIdLS = localStorage.getItem('shopId') || id
+    handleGetCategoryProducts(shopIdLS, categoryIdLS, sortbyLS)
+}
+
+function handleGetCategoryProducts(shopId, categoryId, sortby) {
     var formData = new FormData()
-    for (var pair of formData1.entries()) {
-        formData.append(pair[0], pair[1])
+    formData.append('shopId', shopId)
+    formData.append('categoryId', categoryId)
+    formData.append('sortby', sortby)
+    for (var value of formData.values()) {
+        console.log(value);
     }
-    for (var pair of formData2.entries()) {
-        formData.append(pair[0], pair[1])
-    }
-    // for (var value of formData.values()) {
-    //     console.log(value);
-    // }
     getApiCategoryProducts(renderProducts, formData)
 }
 
@@ -105,7 +137,7 @@ const getApiShop = (callback, formData) => {
         // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
         body: formData
     }
-    fetch('API/shopee/get_shop.php', options)
+    fetch('../API/shopee/get_shop.php', options)
         .then((res) => res.json())
         .then(callback)
 }
@@ -131,7 +163,7 @@ function renderShop(data) {
     document.querySelector('.header__shop').innerHTML = header__shop
 
 }
-getApiShop(renderShop, new FormData())
+getApiShop(renderShop, formData)
 
 // Lấy ảnh slider
 const getApiSlider = (callback, formData) => {
@@ -140,7 +172,7 @@ const getApiSlider = (callback, formData) => {
         // headers: { 'Content-Type': 'application/x-www-form-urlencoding' },
         body: formData
     }
-    fetch('API/shopee/get_slider.php', options)
+    fetch('../API/shopee/get_slider.php', options)
         .then((res) => res.json())
         .then(callback)
 }
@@ -193,15 +225,50 @@ function renderSlider(data) {
     `
     document.querySelector('.slider').innerHTML = html1 + html2.join('') + html3 + html4.join('') + html5
 }
-getApiSlider(renderSlider, new FormData())
+getApiSlider(renderSlider, formData)
 
 // Hiển thị một shopee store từ shopid
 
 function getShopId() {
     var formElement = document.querySelector('form[name="shopidget"]')
     var formData = new FormData(formElement)
-    getApiSlider(renderSlider, formData)
-    getApiCategories(renderCategories, formData)
-    getApiShop(renderShop, formData)
-    getApiCategoryProducts(renderProducts, formData)
+    console.log(formData.get('shopId'))
+    localStorage.setItem('shopId', formData.get('shopId'))
+    alert('Set the Shop ID for the site: ' + formData.get('shopId'))
+    alert('To go back to Default Settings, please click Reset.')
+    // window.location = "/meili/"
+    // getApiSlider(renderSlider, formData)
+    // getApiCategories(renderCategories, formData)
+    // getApiShop(renderShop, formData)
+    // getApiCategoryProducts(renderProducts, formData)
 }
+function resetShopId() {
+    localStorage.removeItem('shopId')
+    alert('Reset Successfully!!!')
+}
+
+function handleRedirectToShopee(itemname, shopid, itemid) {
+    var url = 'https://shopee.vn/'+itemname+'-i.'+shopid+'.'+itemid
+    window.open(url, '_blank')
+}
+
+function setWidthSlider() {
+    var width = window.innerWidth
+    const getWidth = function () {
+        switch (true) {
+            case (width <= 576): return (width - 16) / 2
+            break
+            case (width > 576 && width <= 991): return (width - 32) / 2
+            break
+            // case (width > 991): return (width - (320 + 48)) / 2
+            // break
+            default: return console.log('Error!!!')
+        }
+    }
+    // console.log(getWidth())
+    document.getElementsByClassName('carousel-inner')[0].style.height = getWidth() + 'px';
+    // console.log(width, document.querySelector('.carousel-inner').style.height, document.querySelector('.carousel-inner'))
+}
+
+window.addEventListener('load', setWidthSlider)
+window.addEventListener('resize', setWidthSlider)

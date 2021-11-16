@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+}
+
+.header {
+    height: 60px;
+    border: 1px solid gainsboro;
+}
+
+.product {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "image" "main" "attribute" "description";
+    gap: 1em;
+}
+
+.product__image {
+    grid-area: image;
+    border: 1px solid gainsboro;
+}
+
+.product__main {
+    grid-area: main;
+    border: 1px solid gainsboro;
+}
+
+.product__attribute {
+    grid-area: attribute;
+    border: 1px solid gainsboro;
+}
+
+.product__description {
+    grid-area: description;
+    border: 1px solid gainsboro;
+}
+
+.footer {
+    height: 60px;
+    border: 1px solid gainsboro;
+}

@@ -1,8 +1,6 @@
 .sidebar {
     grid-area: sidebar;
-    border: 1px solid gainsboro;
     align-items: center;
-    background-color: gainsboro;
     height: calc(100vh - 1em * 3 - 60px);
     top: calc(1em * 2 + 60px);
     position: sticky;
@@ -10,10 +8,12 @@
     flex-direction: column;
     justify-content: start;
     border-radius: 1em;
+    box-shadow: 0 0 5px 5px gainsboro;
 }
 
 .sidebar__title {
     display: flex;
+    align-items: center;
     padding: 1em;
     background-color: white;
     position: sticky;
@@ -28,32 +28,17 @@
     justify-content: center;
     align-items: center;
     text-transform: uppercase;
+    font-weight: bolder;
 }
 
 .sidebar__title--icon+.sidebar__title--text {
     margin-left: 1em;
-}
-
-.sidebar__arrow-icon {
-    right: 1em;
-    position: initial;
-    display: none;
 }
 
 .sidebar__title--icon {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.sidebar__title--text {
-    display: block;
-    text-transform: uppercase;
-    font-size: 1.2em;
-}
-
-.sidebar__title--icon+.sidebar__title--text {
-    margin-left: 1em;
 }
 
 .sidebar__content {
@@ -69,12 +54,15 @@
 }
 
 .sidebar__content::-webkit-scrollbar {
-    background-color: #F5F5F5;
+    background-color: bisque;
+    opacity: 0.5;
     border-radius: 0 0 1em 0;
+    width: 0.5em;
 }
 
 .sidebar__content::-webkit-scrollbar-thumb {
-    background-color: gainsboro;
+    background-color: orange;
+    opacity: 0.5;
     border-radius: 0 0 1em 0;
 }
 
@@ -88,15 +76,15 @@
     padding: 0.5em;
     margin: 0.25em 0;
     transition: all 0.4s linear;
-    border: 1px solid gainsboro;
     position: relative;
 }
 
 .sidebar__content--item:hover {
-    background-color: orange;
+    border: none;
+    background-color: bisque;
     border-radius: 1em;
     transition: all 0.4s linear;
-    color: white;
+    color: orangered;
 }
 
 .sidebar__content--item:hover > .sidebar__content--item--image {

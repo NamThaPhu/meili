@@ -1,22 +1,63 @@
 .main {
     grid-area: main;
-    border: 1px solid gainsboro;
-    padding: 1em;
+    padding: 1em 0;
     z-index: 1;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 1em;
     border-radius: 1em;
+    background-color: #F5F5F5;
 }
 
 .main__product {
     height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
-    border: 1px solid gainsboro;
+    justify-content: space-between;
     border-radius: 1em;
+    transition: all 0.5s linear;
+    position: relative;
+    background-color: white;
+    box-shadow: 1px 1px 2px 2px gainsboro;
+}
+
+.main__product--tag-sale {
+    position: absolute;
+    top: 1.5em;
+    right: 0;
+    color: white;
+    z-index: 1;
+    background-color: orange;
+    padding: 0.5em;
+}
+
+.main__product--cover-image {
+    overflow: hidden;
+    width: 100%;
+    border-radius: 1em 1em 0 0;
+}
+
+.main__product:hover {
+    box-shadow: 0 0 5px 5px bisque;
+}
+/* 
+.main__product:hover > .main__product--tag-sales {
+    font-size: bolder;
+    font-size: 1.2em;
+} */
+
+.main__product:hover > .main__product--controller .main__product--controller--view {
+    border: 1px solid orangered;
+}
+
+.main__product:hover > .main__product--name {
+    color: blueviolet;
+    transition: all 0.5s linear;
+}
+
+.main__product:hover > .main__product--cover-image .main__product--image {
+    transform: scale(1.5);
     transition: all 0.5s linear;
 }
 
@@ -27,21 +68,21 @@
     overflow: hidden;
     min-height: 3em;
     margin: 0.5em;
-    padding: 0 0.5em;
-}
-
-.main__product--name:hover {
-    color: blueviolet;
+    text-align: justify;
 }
 
 .main__product--price {
     color: red;
     display: flex;
     align-items: center;
-    padding: 0 0.5em;
-    margin: 0.5em;
+    /* padding: 0 0.5em; */
+    /* margin: 0.5em; */
     transition: all 0.5s linear;
     justify-content: center;
+}
+
+.main__product--price-before {
+    color: #A3B6C4;
 }
 
 .main__product--price:hover {
@@ -66,6 +107,10 @@
     padding: 0.5em;
     width: 100%;
     transition: all 0.5s linear;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 
 .main__product--controller--view:hover {
@@ -83,4 +128,5 @@
     width: 100%;
     height: auto;
     border-radius: 1em 1em 0 0;
+    transition: all 0.5s linear;
 }

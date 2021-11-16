@@ -1,26 +1,32 @@
 @media screen and (min-width: 992px) {
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-        font-family: 'Courier New', Courier, monospace;
-    }
     .app {
         display: grid;
         grid-template-columns: 0.25fr 0.75fr;
         grid-template-areas: "header header" "sidebar slider" "sidebar sort" "sidebar main" "sidebar main" "sidebar footer";
         gap: 1em;
         padding: 1em;
+        background-color: #F5F5F5;
     }
-    .top {
-        z-index: 2;
-        position: fixed;
-        top: 0;
+    .header__shop {
+        display: block;
+    }
+}
+@media  (min-width: 768px) and (max-width: 992px) {
+    .app {
+        display: grid;
+        grid-template-columns: 0.5fr 1fr;
+        grid-template-areas: "header header" "slider slider" "sidebar sort" "sidebar main" "sidebar footer";
+        gap: 1em;
+        padding: 1em;
+        background-color: #F5F5F5;
+    }
+    .main {
+        grid-area: main;
+        z-index: 1;
         width: 100%;
-        height: calc(60px + 16px);
-        right: 0;
-        left: 0;
-        background-color: white;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1em;
+        border-radius: 1em;
     }
 }
