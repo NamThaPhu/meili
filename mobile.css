@@ -4,6 +4,7 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-areas: "header" "slider" "sidebar" "sort" "main" "footer";
+        grid-gap: 0.5em;
         gap: 0.5em;
         padding: 0.5em;
         margin-bottom: 2em;
@@ -131,6 +132,7 @@
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr;
+        grid-gap: 1em;
         gap: 1em;
         border-radius: 1em;
     }
@@ -148,7 +150,6 @@
         font-size: 0.75em;
     }
     .main__product--name {
-        -webkit-line-clamp: 2;
         text-align: unset;
         font-size: 0.75em;
     }
